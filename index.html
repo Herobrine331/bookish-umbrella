@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Capital One">
+    
+    <link rel="apple-touch-icon" href="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bf/9d/9e/bf9d9e60-4963-718c-38fa-be683da65809/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/512x512bb.jpg">
+    <link rel="shortcut icon" href="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bf/9d/9e/bf9d9e60-4963-718c-38fa-be683da65809/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/512x512bb.jpg">
+
+    <title>Capital One</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f8; color: #1c2024; -webkit-tap-highlight-color: transparent; }
+        .c1-card-shadow { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04); }
+        .c1-navy-bg { background-color: #004977; }
+        #configPanel { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(100%); }
+        #configPanel.open { transform: translateY(0); }
+    </style>
+</head>
+<body class="select-none overflow-x-hidden">
+
+    <nav id="navbarHeaderZone" class="bg-white px-5 pt-7 pb-4 sticky top-0 z-40 flex justify-between items-center border-b border-gray-100 select-none">
+        <div class="w-10 flex items-center justify-start pointer-events-none">
+            <i class="fa-solid fa-bars text-gray-700 text-lg"></i>
+        </div>
+        
+        <div class="flex items-center space-x-1.5 pointer-events-none">
+            <svg width="26" height="18" viewBox="0 0 40 28" fill="none">
+                <path d="M8 6C8 4.5 10 3 14 3C22 3 32 10 34 16C35 19 31 21 26 21C16 21 8 12 8 6Z" fill="#D03027"/>
+                <path d="M12 9C12 8 14 7 17 7C23 7 30 12 31 16C31.5 18 29 19 25 19C17 19 12 13 12 9Z" fill="#004977"/>
+            </svg>
+            <span class="text-[17px] font-semibold tracking-tight text-[#004a7c] lowercase">capital<span class="font-bold">one</span></span>
+        </div>
+        
+        <div class="w-10 flex items-center justify-end text-gray-700 pointer-events-none">
+            <i class="fa-regular fa-user text-lg"></i>
+        </div>
+    </nav>
+
+    <div class="max-w-md mx-auto px-4 pt-6 pb-40">
+        
+        <div class="mb-5 px-1">
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Hello, <span id="clientGreetingName">GabeS</span></h2>
+        </div>
+
+        <div class="space-y-3 mb-4" id="financialCardsWrapper"></div>
+
+        <div class="bg-white rounded-[14px] p-4 c1-card-shadow border border-gray-100 flex justify-between items-center mx-0.5 active:bg-gray-50 transition-colors">
+            <div class="flex items-center space-x-3.5">
+                <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-[#004a7c]">
+                    <i class="fa-solid fa-gauge-high text-base"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 text-sm tracking-tight">CreditWise®</h4>
+                    <p class="text-[11px] text-gray-400 font-medium mt-0.5">Your score is up-to-date</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="bg-emerald-500 text-white font-bold text-xs px-2.5 py-1 rounded-full tracking-tighter shadow-sm">784</div>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+            </div>
+        </div>
+
+        <div class="mt-4 bg-white rounded-[14px] c1-card-shadow border border-gray-100 p-4 mx-0.5">
+            <h3 class="font-bold text-gray-900 text-sm tracking-tight mb-4">Recent Activity</h3>
+            <div id="transactionListWrapper" class="space-y-3.5 divide-y divide-gray-50"></div>
+        </div>
+    </div>
+
+    <div id="configPanel" class="fixed inset-0 bg-black/60 z-50 flex items-end">
+        <div class="bg-white w-full max-w-md mx-auto rounded-t-[24px] p-6 pb-10 shadow-2xl border-t border-gray-100">
+            <div class="w-12 h-1 bg-gray-200 rounded-full mx-auto mb-5"></div>
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-base font-bold text-gray-900">Portal View Configurations</h3>
+                <button onclick="toggleConfig()" class="text-gray-400 text-2xl font-light">&times;</button>
+            </div>
+            <div class="space-y-4 overflow-y-auto max-h-[55vh] pr-1">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">User Display Title Name</label>
+                    <input id="formProfileName" type="text" class="w-full bg-gray-50 border border-gray-200 p-3 rounded-xl text-sm outline-none" placeholder="GabeS">
+                </div>
+                <div class="flex justify-between items-center pt-2">
+                    <span class="text-xs font-bold text-gray-400 uppercase">Manage Active Accounts</span>
+                    <button onclick="addNewDebitCardRow()" class="text-xs font-bold text-[#004a7c] bg-blue-50 px-3 py-1 rounded-lg">+ Add Account</button>
+                </div>
+                <div id="formCardsDataContainer" class="space-y-3"></div>
+                <button onclick="commitConfigChanges()" class="w-full c1-navy-bg text-white text-sm font-bold py-4 rounded-xl mt-4 active:scale-[0.99] transition-transform">Update App Layout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-4 pt-3 pb-7 flex justify-around items-center max-w-md mx-auto z-40 shadow-lg">
+        <div class="flex flex-col items-center text-[#004977]"><i class="fa-solid fa-wallet text-xl mb-1"></i><span class="text-[10px] font-bold tracking-tight">View Accounts</span></div>
+        <div class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-right-left text-lg mb-1.5"></i><span class="text-[10px] font-medium tracking-tight">Pay & Transfer</span></div>
+        <div class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-compass text-lg mb-1.5"></i><span class="text-[10px] font-medium tracking-tight">Explore</span></div>
+        <div class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-circle-question text-lg mb-1.5"></i><span class="text-[10px] font-medium tracking-tight">Help</span></div>
+    </div>
+
+    <script>
+        // Global Fallback State Matrix Structure Layout
+        let userState = {
+            profileName: "GabeS",
+            cards: [
+                { type: "Checking", label: "American Express Savings", accountNum: "•8943", balance: 179000.00 }
+            ],
+            savedLogSeed: [] // Stores specific logged values to lock records between sessions
+        };
+
+        const cardNamesPool = [
+            "American Express Savings",
+            "Mastercard Platinum Debit",
+            "Visa Signature Premium",
+            "Capital One 360 Checking",
+            "American Express Gold Cash",
+            "Mastercard Elite Checking"
+        ];
+
+        const merchantPool = [
+            { name: "Amazon.com Store Direct", icon: "fa-brands fa-amazon", color: "bg-orange-50 text-orange-600" },
+            { name: "Starbucks Coffee #1042", icon: "fa-solid fa-mug-hot", color: "bg-emerald-50 text-emerald-600" },
+            { name: "Uber Trip Processing", icon: "fa-solid fa-car", color: "bg-gray-50 text-gray-900" },
+            { name: "Target Retail Corp", icon: "fa-solid fa-bullseye", color: "bg-red-50 text-red-500" },
+            { name: "Apple.com Billing Services", icon: "fa-brands fa-apple", color: "bg-slate-50 text-gray-800" }
+        ];
+
+        let tapCount = 0;
+        let tapTimeout;
+
+        // Custom Click Register Tracking Fast Multi-Tap Patterns
+        document.getElementById('navbarHeaderZone').addEventListener('click', function() {
+            tapCount++;
+            clearTimeout(tapTimeout);
+            if (tapCount === 3) {
+                tapCount = 0;
+                toggleConfig();
+            } else {
+                tapTimeout = setTimeout(() => { tapCount = 0; }, 400);
+            }
+        });
+
+        function init() {
+            // Load from persistent local browser safe box cache space structures
+            const cache = localStorage.getItem('c1_permanent_larp_state');
+            if (cache) {
+                userState = JSON.parse(cache);
+            } else {
+                // If clean environment execution state setup default active logs array seed
+                generateAndCacheTransactions();
+            }
+            renderUI();
+            populateForm();
+        }
+
+        function toggleConfig() { document.getElementById('configPanel').classList.toggle('open'); }
+
+        function generateAndCacheTransactions() {
+            const logsCollection = [];
+            for(let i = 0; i < 3; i++) {
+                const merchant = merchantPool[Math.floor(Math.random() * merchantPool.length)];
+                const amt = (Math.random() * (85.50 - 5.25) + 5.25).toFixed(2);
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const dtFormatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+                logsCollection.push({
+                    name: merchant.name,
+                    icon: merchant.icon,
+                    color: merchant.color,
+                    date: dtFormatted,
+                    amount: amt
+                });
+            }
+            userState.savedLogSeed = logsCollection;
+        }
+
+        function printCachedTransactions() {
+            const listWrapper = document.getElementById('transactionListWrapper');
+            listWrapper.innerHTML = '';
+
+            userState.savedLogSeed.forEach((log) => {
+                const node = document.createElement('div');
+                node.className = "flex justify-between items-center pt-3 first:pt-0 border-none select-none";
+                node.innerHTML = `
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-9 h-9 rounded-full ${log.color} flex items-center justify-center text-sm">
+                            <i class="${log.icon}"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-[13.5px] tracking-tight">${log.name}</p>
+                            <p class="text-[11px] text-gray-400 font-medium">${log.date} • Pending</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-900 text-[14px]">-$${log.amount}</p>
+                    </div>
+                `;
+                listWrapper.appendChild(node);
+            });
+        }
+
+        function renderUI() {
+            document.getElementById('clientGreetingName').innerText = userState.profileName;
+            const cardWrapper = document.getElementById('financialCardsWrapper');
+            cardWrapper.innerHTML = '';
+
+            userState.cards.forEach((card) => {
+                const node = document.createElement('div');
+                node.className = "bg-white p-4 rounded-[14px] c1-card-shadow border border-gray-100 flex justify-between items-center mx-0.5 active:bg-gray-50 transition-colors";
+                node.innerHTML = `
+                    <div class="space-y-0.5">
+                        <p class="font-bold text-gray-900 text-[14.5px] tracking-tight">${card.label}</p>
+                        <p class="text-[11px] text-gray-400 font-medium uppercase tracking-wider">${card.type} ${card.accountNum}</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <p class="text-xl font-bold tracking-tight text-gray-900">$${card.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                            <p class="text-[10px] text-gray-400 font-semibold mt-0.5">Available Balance</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+                    </div>
+                `;
+                cardWrapper.appendChild(node);
+            });
+
+            printCachedTransactions();
+        }
+
+        function populateForm() {
+            document.getElementById('formProfileName').value = userState.profileName;
+            const container = document.getElementById('formCardsDataContainer');
+            container.innerHTML = '';
+            userState.cards.forEach((card, idx) => { createFormRow(card, idx); });
+        }
+
+        function createFormRow(card, index) {
+            const container = document.getElementById('formCardsDataContainer');
+            const row = document.createElement('div');
+            row.className = "bg-gray-50 p-3 rounded-xl border border-gray-200 relative space-y-2";
+            row.innerHTML = `
+                <button type="button" onclick="removeCardRow(${index})" class="absolute right-2 top-1.5 text-gray-400 text-sm hover:text-red-500">&times;</button>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <div class="bg-gray-200 border p-1.5 rounded text-xs text-gray-600 font-bold flex items-center justify-center select-none">Debit</div>
+                    <input type="text" class="form-label bg-white border p-1.5 rounded text-xs col-span-2 outline-none" value="${card.label}">
+                </div>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <input type="text" class="form-number bg-white border p-1.5 rounded text-xs outline-none" value="${card.accountNum.replace('•', '')}" placeholder="8943">
+                    <input type="number" step="0.01" class="form-balance bg-white border p-1.5 rounded text-xs col-span-2 outline-none" value="${card.balance}">
+                </div>
+            `;
+            container.appendChild(row);
+        }
+
+        function addNewDebitCardRow() {
+            const rDigits = Math.floor(1000 + Math.random() * 9000);
+            const rName = cardNamesPool[Math.floor(Math.random() * cardNamesPool.length)];
+            
+            userState.cards.push({ 
+                type: "Checking", 
+                label: rName, 
+                accountNum: `•${rDigits}`, 
+                balance: 0.00 
+            });
+            populateForm();
+        }
+
+        function removeCardRow(idx) {
+            userState.cards.splice(idx, 1);
+            populateForm();
+        }
+
+        function commitConfigChanges() {
+            const nameForm = document.getElementById('formProfileName').value || "User";
+            const rowNodes = document.querySelectorAll('#formCardsDataContainer > div');
+            const newCards = [];
+
+            rowNodes.forEach((row) => {
+                let num = row.querySelector('.form-number').value || "0000";
+                if (!num.startsWith('•')) num = '•' + num.slice(-4);
+                
+                newCards.push({
+                    type: "Checking",
+                    label: row.querySelector('.form-label').value || "Capital One Checking",
+                    accountNum: num,
+                    balance: parseFloat(row.querySelector('.form-balance').value) || 0.00
+                });
+            });
+
+            userState.profileName = nameForm;
+            userState.cards = newCards;
+            
+            // Randomize and rebuild statement charges specifically on user interface changes updates submit trigger
+            generateAndCacheTransactions();
+
+            // Core Save Execution Function to hold data sets permanently in memory
+            localStorage.setItem('c1_permanent_larp_state', JSON.stringify(userState));
+            
+            renderUI();
+            toggleConfig();
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
