@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Capital One">
     
-    <link rel="apple-touch-icon" href="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bf/9d/9e/bf9d9e60-4963-718c-38fa-be683da65809/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/512x512bb.jpg">
-    <link rel="shortcut icon" href="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bf/9d/9e/bf9d9e60-4963-718c-38fa-be683da65809/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/512x512bb.jpg">
+    <link rel="apple-touch-icon" type="image/png" href="https://i.imgur.com/gKshHqW.png">
+    <link rel="icon" type="image/png" href="https://i.imgur.com/gKshHqW.png">
 
     <title>Capital One</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -102,13 +103,12 @@
     </div>
 
     <script>
-        // Global Fallback State Matrix Structure Layout
         let userState = {
             profileName: "GabeS",
             cards: [
                 { type: "Checking", label: "American Express Savings", accountNum: "•8943", balance: 179000.00 }
             ],
-            savedLogSeed: [] // Stores specific logged values to lock records between sessions
+            savedLogSeed: []
         };
 
         const cardNamesPool = [
@@ -131,7 +131,6 @@
         let tapCount = 0;
         let tapTimeout;
 
-        // Custom Click Register Tracking Fast Multi-Tap Patterns
         document.getElementById('navbarHeaderZone').addEventListener('click', function() {
             tapCount++;
             clearTimeout(tapTimeout);
@@ -144,12 +143,10 @@
         });
 
         function init() {
-            // Load from persistent local browser safe box cache space structures
-            const cache = localStorage.getItem('c1_permanent_larp_state');
+            const cache = localStorage.getItem('c1_permanent_larp_state_png');
             if (cache) {
                 userState = JSON.parse(cache);
             } else {
-                // If clean environment execution state setup default active logs array seed
                 generateAndCacheTransactions();
             }
             renderUI();
@@ -293,11 +290,9 @@
             userState.profileName = nameForm;
             userState.cards = newCards;
             
-            // Randomize and rebuild statement charges specifically on user interface changes updates submit trigger
             generateAndCacheTransactions();
 
-            // Core Save Execution Function to hold data sets permanently in memory
-            localStorage.setItem('c1_permanent_larp_state', JSON.stringify(userState));
+            localStorage.setItem('c1_permanent_larp_state_png', JSON.stringify(userState));
             
             renderUI();
             toggleConfig();
