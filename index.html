@@ -8,8 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Capital One">
     
-    <link rel="apple-touch-icon" type="image/png" href="https://i.imgur.com/gKshHqW.png">
-    <link rel="icon" type="image/png" href="https://i.imgur.com/gKshHqW.png">
+    <link rel="apple-touch-icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUHMgYVFRUoG7I7ogAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkY21iaQAAAnVJREFUeNrtms9rE0EUx7+b7G6SNDG1pYgIerAGvYgVvHgRD148e/Hgv6PnggcvXjx4VvDgwYtI8SCoByv0YAtisS0Uu7vZaLI78eBWSUuT3exms7vN7vN7mZfdfb/vY97MvAnwXw0PDXU6HQvAGbO4pXpIsfXhA+Y68K8AbwO7Y/UvVlUvC6sXFdaL6l6p7hWwX8G+fC9XpY/V2y87yqI26XW7fLg8pNh8uNxWvSyvXpS6V6q7Be1XasfP8m36uPhuD8oDAPw6o7pvsfnhfS88rZqV7C7f7pXqdkH7UduwTftD8b1A8wEAfuX/CPApsDtS86fP27S9vFf9K2u/fT0A+HVKbe8m9h6pYv3V58XmB/v8/GqV7N3E7kv6XqB5AAC/pizfWb6X9wDw64Syb7DsWyzbC3gA+DXmXmNee43mAwB6jHnD+UHeA8CvY96w5g096b7GvPYazQcA9Bh7jb1G8wEAtcc+Yp+xX/70E7Vfve6h1Zg9Y6/RfABA32LvsM9YnvD997+rVpPeS+wdmg8AGFrsLfuK+Ynjf+G9KjWZ9xV7jeYDAGvEvmFfMT/f8X33bXGqMW/YVzQfANhD7Bv2FePjP8vXvSrtX8R+Ym/RfADwA9mP2I+MPvA/28tWb+LgYvYDzQcA6zT7gf3A+L6n9vC80+Fm9gP6v1B8gP4p7E9G76V9vK3sR/T7ofkAYZ0S+469m+n9v6vszVjvJvYdzQcA+wT7FnuLbO/3W9lbyR9Wf9p6gOYDeD6A/cjovdD7fFfZW7Pehf1C8wF6v7AfsB9yYv/vK3urWvdiP9F8wN4A+449ZOfXvVWsR+xp86v2E80H7I+xH7Mfc2L7q1qP2v80v6E8vE9YvjPLv866vYAHgF9nbD8/7f8f6R9Wf7Oun0b938f+f6R/WP1ptX6p9P098P8j/T+UvUf97UfL9Qel79M9fWdWP0P9gV79DPUHevU//m6Gf5NhmfUAAAAASUVORK5CYII=">
 
     <title>Capital One</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -103,6 +102,7 @@
     </div>
 
     <script>
+        // Default Global Setup State
         let userState = {
             profileName: "GabeS",
             cards: [
@@ -131,6 +131,7 @@
         let tapCount = 0;
         let tapTimeout;
 
+        // Custom Click Register Tracking Fast Multi-Tap Patterns
         document.getElementById('navbarHeaderZone').addEventListener('click', function() {
             tapCount++;
             clearTimeout(tapTimeout);
@@ -143,6 +144,7 @@
         });
 
         function init() {
+            // Load from local storage container
             const cache = localStorage.getItem('c1_permanent_larp_state_png');
             if (cache) {
                 userState = JSON.parse(cache);
@@ -292,6 +294,7 @@
             
             generateAndCacheTransactions();
 
+            // Save configuration state permanently inside local data structures
             localStorage.setItem('c1_permanent_larp_state_png', JSON.stringify(userState));
             
             renderUI();
